@@ -44,6 +44,9 @@ jobs:
           sudo apt-get install -y firefox
           firefox --version
 
+      - name: Ensure Gradle Wrapper is executable
+        run: chmod +x ./gradlew
+
       # Build and test
       - name: Run Gradle tests
         run: ./gradlew test
