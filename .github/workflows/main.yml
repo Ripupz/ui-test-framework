@@ -23,7 +23,7 @@ jobs:
 
       # Install Geckodriver
       - name: Install Geckodriver
-        uses: browser-actions/setup-geckodriver@v1
+        uses: crazy-max/ghaction-setup-geckodriver@v2
 
       # Build and test
       - name: Run Gradle tests
