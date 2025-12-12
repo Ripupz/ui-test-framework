@@ -17,13 +17,32 @@ jobs:
           java-version: 17
           distribution: temurin
 
-      # Install Firefox for Selenium
-      - name: Install Firefox
-        uses: browser-actions/setup-firefox@v1
-
-      # Install Geckodriver
+      # Install GeckoDriver
       - name: Install Geckodriver
-        uses: crazy-max/ghaction-setup-geckodriver@v2
+        run: |
+          set -e
+          # Get the latest release tag from GitHub API
+          GECKO_VERSION=$(curl -s https://api.github.com/repos/mozilla/geckodriver/releases/latest \
+            | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/')
+          echo "Using geckodriver $GECKO_VERSION"
+      
+          # Download appropriate archive for Linux x86_64
+          wget -q "https://github.com/mozilla/geckodriver/releases/download/${GECKO_VERSION}/geckodriver-${GECKO_VERSION}-linux64.tar.gz"
+      
+          # Extract and install
+          tar -xzf "geckodriver-${GECKO_VERSION}-linux64.tar.gz"
+          sudo mv geckodriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/geckodriver
+      
+          # Verify
+          geckodriver --version
+
+      # Install Firefox
+      - name: Install Firefox via apt
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y firefox
+          firefox --version
 
       # Build and test
       - name: Run Gradle tests
