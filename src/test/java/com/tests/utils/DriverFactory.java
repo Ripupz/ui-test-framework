@@ -17,6 +17,7 @@ public class DriverFactory {
 
             // firefox options
             FirefoxOptions options = new FirefoxOptions();
+            options.addArguments("--headless");
             options.addArguments("--width=1280");
             options.addArguments("--height=720");
 
