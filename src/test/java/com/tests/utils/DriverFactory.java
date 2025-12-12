@@ -13,13 +13,11 @@ public class DriverFactory {
         if (driver == null) {
 
             // setup Geckodriver automatically
-            WebDriverManager.firefoxdriver().setup();
+            WebDriverManager.firefoxdriver().browserVersion("latest").setup();
 
             // firefox options
             FirefoxOptions options = new FirefoxOptions();
             options.addArguments("--headless");
-            options.addArguments("--width=1280");
-            options.addArguments("--height=720");
 
 
             driver = new FirefoxDriver(options);
